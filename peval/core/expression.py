@@ -145,8 +145,8 @@ def try_call_method(obj, name, args=(), kwds={}):
 
 def peval_call(state, ctx, func, args=[], keywords=[]):
 
-    assert all(type(arg) != ast.Starred for arg in args)
-    assert all(kw.arg is not None for kw in keywords)
+    #assert all(type(arg) != ast.Starred for arg in args)
+    #assert all(kw.arg is not None for kw in keywords)
 
     keyword_expressions = [kw.value for kw in keywords]
 
@@ -603,13 +603,13 @@ class _peval_expression_dispatcher:
             result = ast.UnaryOp(op=node.op, operand=result.args[0])
         return state, result
 
-    @staticmethod
-    def handle_Lambda(
-        state: ImmutableDict,
-        node: ast.Lambda,
-        ctx: ImmutableADict,
-    ):
-        raise NotImplementedError
+    #@staticmethod
+    #def handle_Lambda(
+    #    state: ImmutableDict,
+    #    node: ast.Lambda,
+    #    ctx: ImmutableADict,
+    #):
+    #    raise NotImplementedError
 
     @staticmethod
     def handle_IfExp(state: ImmutableDict, node: ast.IfExp, ctx: ImmutableADict):

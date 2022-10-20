@@ -125,17 +125,21 @@ def forward_transfer(
         if isinstance(statement, ast.AnnAssign):
             target = statement.target
         else:
+            if len(statement.targets) != 1:
+                return gen_sym, in_env, [], {}
             assert len(statement.targets) == 1
             target = statement.targets[0]
 
         if isinstance(target, ast.Name):
             target = target.id
         elif isinstance(target, (ast.Name, ast.Tuple)):
+            return gen_sym, in_env, [], {}
             raise ValueError(
                 "Destructuring assignment (should have been eliminated by other pass)",
                 target,
             )
         else:
+            return gen_sym, in_env, [], {}
             raise ValueError("Incorrect assignment target", target)
 
         result, gen_sym = peval_expression(statement.value, gen_sym, in_env.known_values())
